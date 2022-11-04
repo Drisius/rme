@@ -63,6 +63,8 @@ namespace MenuBar
 		SELECT_MODE_VISIBLE,
 		AUTOMAGIC,
 		BORDERIZE_SELECTION,
+		EBORDERIZE_SELECTION,
+		PBORDERIZE_SELECTION,
 		BORDERIZE_MAP,
 		RANDOMIZE_SELECTION,
 		RANDOMIZE_MAP,
@@ -198,6 +200,7 @@ public:
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
 	void OnBorderizeSelection(wxCommandEvent& event);
+	void OnExternalBorderizeSelection(wxCommandEvent& event);
 	void OnBorderizeMap(wxCommandEvent& event);
 	void OnRandomizeSelection(wxCommandEvent& event);
 	void OnRandomizeMap(wxCommandEvent& event);

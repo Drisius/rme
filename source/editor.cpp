@@ -794,6 +794,22 @@ void Editor::borderizeSelection()
 	addAction(action);
 }
 
+void Editor::externalborderizeSelection()
+{
+	if (selection.size() == 0) {
+		g_gui.SetStatusText("No items selected. Can't borderize.");
+	}
+
+	Action* action = actionQueue->createAction(ACTION_EBORDERIZE);
+	for (Tile* tile : selection) {
+		Tile* newTile = tile->deepCopy(map);
+		newTile->externalborderize(&map);
+		newTile->select();
+		action->addChange(newd Change(newTile));
+	}
+	addAction(action);
+}
+
 void Editor::borderizeMap(bool showdialog)
 {
 	if(showdialog) {

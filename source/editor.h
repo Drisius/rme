@@ -99,6 +99,8 @@ public: // Functions
 	void destroySelection();
 	// Borderizes the selected region
 	void borderizeSelection();
+	// Borderizes the selection region around the (= external) edges
+	void externalborderizeSelection();
 	// Randomizes the ground in the selected region
 	void randomizeSelection();
 

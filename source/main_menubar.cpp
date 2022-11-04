@@ -90,6 +90,8 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 
 	MAKE_ACTION(AUTOMAGIC, wxITEM_CHECK, OnToggleAutomagic);
 	MAKE_ACTION(BORDERIZE_SELECTION, wxITEM_NORMAL, OnBorderizeSelection);
+	MAKE_ACTION(EBORDERIZE_SELECTION, wxITEM_NORMAL, OnExternalBorderizeSelection);
+	MAKE_ACTION(PBORDERIZE_SELECTION, wxITEM_NORMAL, OnBorderizeSelection);
 	MAKE_ACTION(BORDERIZE_MAP, wxITEM_NORMAL, OnBorderizeMap);
 	MAKE_ACTION(RANDOMIZE_SELECTION, wxITEM_NORMAL, OnRandomizeSelection);
 	MAKE_ACTION(RANDOMIZE_MAP, wxITEM_NORMAL, OnRandomizeMap);
@@ -341,6 +343,8 @@ void MainMenuBar::Update()
 	EnableItem(COPY, has_map);
 
 	EnableItem(BORDERIZE_SELECTION, has_map && has_selection);
+	EnableItem(EBORDERIZE_SELECTION, has_map && has_selection);
+	EnableItem(PBORDERIZE_SELECTION, has_map && has_selection);
 	EnableItem(BORDERIZE_MAP, is_local);
 	EnableItem(RANDOMIZE_SELECTION, has_map && has_selection);
 	EnableItem(RANDOMIZE_MAP, is_local);
@@ -1134,6 +1138,15 @@ void MainMenuBar::OnBorderizeSelection(wxCommandEvent& WXUNUSED(event))
 		return;
 
 	g_gui.GetCurrentEditor()->borderizeSelection();
+	g_gui.RefreshView();
+}
+
+void MainMenuBar::OnExternalBorderizeSelection(wxCommandEvent& WXUNUSED(event))
+{
+	if (!g_gui.IsEditorOpen())
+		return;
+
+	g_gui.GetCurrentEditor()->externalborderizeSelection();
 	g_gui.RefreshView();
 }
 

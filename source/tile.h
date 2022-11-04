@@ -149,6 +149,7 @@ public: //Functions
 
 	// Borderize this tile
 	void borderize(BaseMap* parent);
+	void externalborderize(BaseMap* parent);
 
 	bool hasTable() const { return testFlags(statflags, TILESTATE_HAS_TABLE); }
 	Item* getTable() const;

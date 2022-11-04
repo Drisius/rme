@@ -482,6 +482,11 @@ void Tile::borderize(BaseMap* parent)
 	GroundBrush::doBorders(parent, this);
 }
 
+void Tile::externalborderize(BaseMap* parent)
+{
+	GroundBrush::doExternalBorders(parent, this);
+}
+
 void Tile::addBorderItem(Item* item)
 {
 	if(!item) return;

@@ -41,6 +41,7 @@ public:
 	virtual void draw(BaseMap* map, Tile* tile, void* parameter);
 	virtual void undraw(BaseMap* map, Tile* tile);
 	static void doBorders(BaseMap* map, Tile* tile);
+	static void doExternalBorders(BaseMap* map, Tile* tile);
 	static const BorderBlock* getBrushTo(GroundBrush* first, GroundBrush* second);
 
 	virtual int32_t getZ() const { return z_order; }
