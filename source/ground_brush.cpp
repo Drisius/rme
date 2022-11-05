@@ -1273,7 +1273,7 @@ void GroundBrush::doExternalBorders(BaseMap* map, Tile* tile)
 
 		std::map<BorderType, BorderType> mapExternalBordering =
 		{
-			{BORDER_NONE, BORDER_NONE},
+			{BORDER_NONE,	BORDER_NONE},
 			{NORTH_HORIZONTAL, SOUTH_HORIZONTAL},
 			{EAST_HORIZONTAL, WEST_HORIZONTAL},
 			{SOUTH_HORIZONTAL, NORTH_HORIZONTAL},
@@ -1297,13 +1297,34 @@ void GroundBrush::doExternalBorders(BaseMap* map, Tile* tile)
 				break;
 			}
 
-			/*uint16_t tileID = borderBrush->getID();
-			tile->addBorderItem(Item::Create(tileID));*/
+			int countNeighbors = 0;
+			for (int32_t i = -1; i < 2; ++i) {	// loop over neighbors
+				for (int32_t j = -1; j < 2; ++j) {
+					auto& neighbourpair = neighbours[countNeighbors];
+					countNeighbors += 1;
+					if (neighbourpair.second != nullptr && !(i == 0 && j == 0)){ // skip middle tile and make sure groundbrush is not nullptr
+						Tile* tileNeighbor = map->getTile(x + j, y + i, z);
+						if (tileNeighbor) {
+							if (tileNeighbor->getGroundBrush() != tile->getGroundBrush()) {	// check if groundbrushes match; if so - not interested
+								Item* neighborTileID = tileNeighbor->ground;
+								if (neighborTileID) {
+									transformItem(tile->ground, neighborTileID->getID());
+									i = 2;
+									j = 2;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			/*uint32_t extraTile = tile->ground->getID();
+			OutputDebugStringA(const_cast<char *>(std::to_string(extraTile).c_str()));*/
 
 			if (borderCluster.border->tiles[direction]) {
 				tile->addBorderItem(Item::Create(borderCluster.border->tiles[direction]));
 			}
-			else {
+			else { // This might need a bit of tuning
 				if (direction == NORTHWEST_DIAGONAL) {
 					tile->addBorderItem(Item::Create(borderCluster.border->tiles[WEST_HORIZONTAL]));
 					tile->addBorderItem(Item::Create(borderCluster.border->tiles[NORTH_HORIZONTAL]));
